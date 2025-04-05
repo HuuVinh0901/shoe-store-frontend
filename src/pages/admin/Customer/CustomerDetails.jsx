@@ -40,7 +40,6 @@ const ordersColumns = [
     ),
   },
   { title: 'SPENT', dataIndex: 'spent', key: 'spent' },
-  { title: 'ACTIONS', key: 'actions', render: () => <MoreOutlined style={{ color: 'gray' }} /> },
 ];
 
 const CustomerDetail = () => {
@@ -58,11 +57,12 @@ const CustomerDetail = () => {
         id: location.state.customer.key,
         name: location.state.customer.customerName,
         email: location.state.customer.email,
-        phone: location.state.customer.phoneNumber,
+        phoneNumber: location.state.customer.phoneNumber,
         status: location.state.customer.status,
         ordersCount: location.state.customer.order,
         totalSpent: location.state.customer.totalSpent,
         username: location.state.customer.customerName,
+        customerGroup: location.state.customer.customerGroup,
         avatar: null,
         password: '',
       });
@@ -121,7 +121,7 @@ const CustomerDetail = () => {
         ...customerData,
         name: updatedData.name,
         email: updatedData.email,
-        phone: updatedData.phoneNumber,
+        phoneNumber: updatedData.phoneNumber,
       });
       setShowModal(false);
 
@@ -255,7 +255,7 @@ const CustomerDetail = () => {
                     {customerData.status}
                   </Text>
                 </p>
-                <p><strong>Contact:</strong> {customerData.phone}</p>
+                <p><strong>Contact:</strong> {customerData.phoneNumber}</p>
               </div>
 
               <Button type="primary" block style={{ marginTop: 16 }} onClick={handleEditClick}>
@@ -275,6 +275,10 @@ const CustomerDetail = () => {
                 </Col>
               </Row>
               <Table
+                onRow={(record) => ({
+                  onClick: () => navigate(`/admin/orders/${record.orderId}`),
+                  style: { cursor: 'pointer' },
+                })}
                 columns={ordersColumns}
                 dataSource={ordersData}
                 pagination={{ pageSize: 6 }}

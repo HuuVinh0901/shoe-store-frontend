@@ -13,8 +13,9 @@ const EditDetail = ({ open, onCancel, customer, handleSave, mode }) => {
         email: customer.email,
         phoneNumber: customer.phoneNumber,
         status: customer.status,
-        CI: customer.CI || '',
+        customerGroup: customer.customerGroup,
       });
+      console.log('Form values:', form.getFieldsValue());
     } else if (mode === 'add') {
       form.setFieldsValue({
         status: 'Active',
@@ -23,6 +24,7 @@ const EditDetail = ({ open, onCancel, customer, handleSave, mode }) => {
     } else {
       form.resetFields();
     }
+    
   }, [customer, form, mode]);
 
   const onFinish = (values) => {
@@ -92,13 +94,17 @@ const EditDetail = ({ open, onCancel, customer, handleSave, mode }) => {
         </Form.Item>
 
         <Form.Item
-          label="CI"
-          name="CI"
-          rules={[{ required: true, message: 'CI cannot be blank' }]}
+          name="customerGroup"
+          label="TYPE OF CUSTOMER"
+          rules={[{ required: true, message: 'Please select type of customer' }]}
+          initialValue={'NEW'}
         >
-          <Input />
+          <Select>
+            <Option value="NEW">New Customer</Option>
+            <Option value="EXISTING">Existing Customer</Option>
+            <Option value="VIP">VIP Member</Option>
+          </Select>
         </Form.Item>
-
         <Form.Item>
           <Button type="primary" htmlType="submit" style={{ marginRight: 8 }}>
             {mode === 'add' ? 'Add Customer' : 'Save Changes'}

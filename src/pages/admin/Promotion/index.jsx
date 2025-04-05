@@ -101,7 +101,6 @@ const PromotionDashboard = () => {
     fetchStats();
   }, []);
 
-  // Hàm gọi API để lấy danh sách promotions
   const fetchPromotions = async () => {
     setLoading(true);
     try {
@@ -110,7 +109,7 @@ const PromotionDashboard = () => {
         page: currentPage,
         pageSize: pageSize,
       };
-      console.log('Fetching with params:', params); // Debug params gửi lên API
+      console.log('Fetching with params:', params);
       const data = await searchPromotions(params);
       setPromotions(data.data.items);
       setTotalItems(data.data.totalElements);
